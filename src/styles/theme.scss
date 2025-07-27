@@ -1,0 +1,46 @@
+:root {
+  // Base colors
+  --background: #ffffff;
+  --foreground: #171717;
+
+  // Typography
+  --font-family: 'Inter';
+  --font-size-base: 16px;
+  --font-weight-base: 400;
+  --line-height-base: 1.6;
+
+  // Toggle theme colors
+  --toggle-theme-font-size: var(--font-size-base);
+  --toggle-theme-font-weight: var(--font-weight-base);
+  --toggle-theme-line-height: var(--line-height-base);
+  --toggle-theme-icon-line-height: var(--line-height-base);
+  --toggle-theme-padding: 2px 4px;
+  --toggle-theme-border-radius: 0.5rem;
+  --toggle-theme-background: #ffffff;
+  --toggle-theme-foreground: #171717;
+  --toggle-theme-border: #171717;
+  --toggle-theme-hover-background: #171717;
+  --toggle-theme-hover-foreground: #ffffff;
+  --toggle-theme-icon-size: 1.2rem;
+  --toggle-theme-text-weight: 500;
+}
+
+[data-theme='dark'] {
+  // Base colors
+  --background: #171717;
+  --foreground: #ffffff;
+
+  // Toggle theme colors
+  --toggle-theme-background: #171717;
+  --toggle-theme-foreground: #ffffff;
+  --toggle-theme-border: #ffffff;
+  --toggle-theme-hover-background: #ffffff;
+  --toggle-theme-hover-foreground: #171717;
+}
+
+// Global styles
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-family);
+}

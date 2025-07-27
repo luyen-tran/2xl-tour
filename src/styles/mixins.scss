@@ -1,0 +1,80 @@
+@mixin flex(
+  $direction: row,
+  $justify: center,
+  $align: center,
+  $gap: 0,
+  $wrap: nowrap
+) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+  flex-wrap: $wrap;
+}
+
+@mixin grid($columns: 12, $gap: 0, $rows: 1) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  grid-template-rows: repeat($rows, 1fr);
+  gap: $gap;
+}
+
+@mixin text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin text-ellipsis-multi-line($line: 2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+}
+
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin typography(
+  $font-family: var(--font-family),
+  $font-size: var(--font-size-base),
+  $font-weight: var(--font-weight-base),
+  $line-height: var(--line-height-base),
+  $spacing: var(--letter-spacing-base)
+) {
+  font-family: $font-family;
+  font-size: $font-size;
+  font-weight: $font-weight;
+  line-height: $line-height;
+  letter-spacing: $spacing;
+}
+
+@mixin media-query($breakpoint) {
+  @if $breakpoint == 'xxs' {
+    @media (max-width: 480px) {
+      @content;
+    }
+  } @else if $breakpoint == 'xs' {
+    @media (max-width: 640px) {
+      @content;
+    }
+  } @else if $breakpoint == 'sm' {
+    @media (max-width: 768px) {
+      @content;
+    }
+  } @else if $breakpoint == 'lg' {
+    @media (max-width: 1200px) {
+      @content;
+    }
+  } @else if $breakpoint == 'xl' {
+    @media (max-width: 1400px) {
+      @content;
+    }
+  }
+}

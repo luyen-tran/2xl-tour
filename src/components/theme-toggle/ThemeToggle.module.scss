@@ -1,0 +1,36 @@
+@import '../../styles/mixins';
+
+.themeToggle {
+  @include flex(row, center, center, 4px, nowrap);
+  @include typography(
+    $font-size: var(--toggle-theme-font-size),
+    $font-weight: var(--toggle-theme-font-weight),
+    $line-height: var(--toggle-theme-line-height)
+  );
+  padding: var(--toggle-theme-padding);
+  background: var(--toggle-theme-background);
+  border: 2px solid var(--toggle-theme-border);
+  border-radius: var(--toggle-theme-border-radius);
+  color: var(--toggle-theme-foreground);
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: var(--toggle-theme-hover-background);
+    color: var(--toggle-theme-hover-foreground);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  .c-toggle-theme-icon {
+    font-size: var(--toggle-theme-icon-size);
+    line-height: var(--toggle-theme-icon-line-height);
+  }
+
+  .c-toggle-theme-text {
+    font-weight: var(--toggle-theme-text-weight);
+  }
+}

@@ -1,0 +1,16 @@
+node_modules
+.next
+.git
+dist
+build
+coverage
+*.min.js
+*.min.css
+*.min.scss
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.env*
+.DS_Store
+*.log
+storybook-static
