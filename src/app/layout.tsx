@@ -1,6 +1,6 @@
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import '../styles/theme.scss';
 
 export const metadata: Metadata = {
@@ -82,7 +82,11 @@ export const metadata: Metadata = {
 
   // Technical SEO
   robots: 'index, follow',
-  viewport: 'width=device-width, initial-scale=1',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({
