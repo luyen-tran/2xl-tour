@@ -16,6 +16,8 @@ Dự án Next.js 15 được setup với TypeScript, Prettier, Storybook, Husky 
 - **Testing Library** - React testing utilities
 - **Husky** - Git hooks
 - **lint-staged** - Pre-commit code quality checks
+- **Vercel Analytics** - Web analytics và performance monitoring
+- **Vercel Speed Insights** - Real user monitoring cho Core Web Vitals
 
 ## 🛠️ Cài đặt
 
@@ -100,9 +102,8 @@ Dự án sử dụng Husky để chạy các hooks tự động:
 ```
 src/
 ├── app/                 # Next.js App Router
-│   ├── layout.tsx       # Root layout
-│   ├── page.tsx         # Home page
-│   └── favicon.ico      # Favicon
+│   ├── layout.tsx       # Root layout với SEO metadata
+│   └── page.tsx         # Home page
 ├── components/          # React components
 │   └── theme-toggle/    # Theme toggle component
 │       ├── ThemeToggle.tsx           # Component implementation
@@ -115,6 +116,13 @@ src/
     ├── index.scss       # Main styles entry
     ├── theme.scss       # Theme variables
     └── mixins.scss      # SCSS mixins
+
+public/                  # Static assets
+├── favicon.ico          # Favicon chính (logo 2XL Tour)
+├── favicon-16x16.png    # Favicon 16x16
+├── favicon-32x32.png    # Favicon 32x32
+├── apple-touch-icon.png # Icon cho iOS home screen
+└── og-image.jpg         # Open Graph image cho social sharing
 
 test/                    # Test setup files (root level)
 └── setup.ts             # Vitest setup configuration
@@ -139,6 +147,31 @@ Dự án sử dụng SCSS với CSS Modules để styling:
 - **Component styles**: `src/components/ComponentName.module.scss`
 - **CSS Modules**: Tự động scope CSS classes để tránh conflicts
 - **Modern SCSS**: Sử dụng `@use` thay vì `@import` (deprecated)
+
+## 🔍 SEO & Metadata
+
+Dự án bao gồm tối ưu SEO toàn diện:
+
+- **Metadata đầy đủ**: Title, description, keywords được tối ưu cho booking tour
+- **Open Graph**: Đầy đủ OG tags cho social media sharing với custom image
+- **Twitter Cards**: Tối ưu cho Twitter sharing với large image cards
+- **Hệ thống favicon**: Nhiều kích thước icon cho các thiết bị và ngữ cảnh khác nhau
+- **Structured data sẵn sàng**: Chuẩn bị cho JSON-LD implementation
+- **Performance monitoring**: Tích hợp Vercel Analytics và Speed Insights
+
+### Environment Variables
+
+Tạo file `.env.local` cho development:
+
+```bash
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
+
+Cho production, set:
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://yourdomain.com
+```
 
 ## 📚 Tài liệu tham khảo
 
