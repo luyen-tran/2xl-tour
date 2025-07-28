@@ -1,4 +1,4 @@
-@import '../../styles/mixins';
+@use '../../styles/mixins' as *;
 
 .themeToggle {
   @include flex(row, center, center, 4px, nowrap);
