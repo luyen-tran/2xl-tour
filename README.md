@@ -16,6 +16,8 @@ A Next.js 15 project setup with TypeScript, Prettier, Storybook, Husky, and Vite
 - **Testing Library** - React testing utilities
 - **Husky** - Git hooks
 - **lint-staged** - Pre-commit code quality checks
+- **Vercel Analytics** - Web analytics and performance monitoring
+- **Vercel Speed Insights** - Real user monitoring for Core Web Vitals
 
 ## 🛠️ Installation
 
@@ -100,9 +102,8 @@ The project uses Husky to run automated hooks:
 ```
 src/
 ├── app/                 # Next.js App Router
-│   ├── layout.tsx       # Root layout
-│   ├── page.tsx         # Home page
-│   └── favicon.ico      # Favicon
+│   ├── layout.tsx       # Root layout with SEO metadata
+│   └── page.tsx         # Home page
 ├── components/          # React components
 │   └── theme-toggle/    # Theme toggle component
 │       ├── ThemeToggle.tsx           # Component implementation
@@ -115,6 +116,13 @@ src/
     ├── index.scss       # Main styles entry
     ├── theme.scss       # Theme variables
     └── mixins.scss      # SCSS mixins
+
+public/                  # Static assets
+├── favicon.ico          # Main favicon (2XL Tour logo)
+├── favicon-16x16.png    # 16x16 favicon
+├── favicon-32x32.png    # 32x32 favicon
+├── apple-touch-icon.png # iOS home screen icon
+└── og-image.jpg         # Open Graph image for social sharing
 
 test/                    # Test setup files (root level)
 └── setup.ts             # Vitest setup configuration
@@ -139,6 +147,31 @@ The project uses SCSS with CSS Modules for styling:
 - **Component styles**: `src/components/ComponentName.module.scss`
 - **CSS Modules**: Automatically scope CSS classes to avoid conflicts
 - **Modern SCSS**: Uses `@use` instead of `@import` (deprecated)
+
+## 🔍 SEO & Metadata
+
+The project includes comprehensive SEO optimization:
+
+- **Complete metadata**: Title, description, keywords optimized for tour booking
+- **Open Graph**: Full OG tags for social media sharing with custom image
+- **Twitter Cards**: Optimized for Twitter sharing with large image cards
+- **Favicon system**: Multiple icon sizes for different devices and contexts
+- **Structured data ready**: Prepared for JSON-LD implementation
+- **Performance monitoring**: Vercel Analytics and Speed Insights integrated
+
+### Environment Variables
+
+Create a `.env.local` file for local development:
+
+```bash
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
+
+For production, set:
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://yourdomain.com
+```
 
 ## 📚 Documentation
 
