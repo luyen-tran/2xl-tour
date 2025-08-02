@@ -90,6 +90,43 @@ npm run build
 npm run build-storybook
 ```
 
+## 🚀 CI/CD Pipeline
+
+### GitHub Actions
+
+Dự án bao gồm tự động deployment sử dụng GitHub Actions:
+
+- **Workflow**: `.github/workflows/deploy.yml`
+- **Trigger**: Tự động deploy khi push lên nhánh `main`
+- **Target**: Deploy lên EC2 server
+- **Quy trình**:
+  1. Checkout code
+  2. Setup Node.js 18
+  3. Cài đặt dependencies và build
+  4. Deploy lên EC2 qua SSH
+  5. Restart ứng dụng với PM2
+
+### Secrets cần thiết
+
+Cấu hình các secrets này trong GitHub repository settings:
+
+```bash
+EC2_HOST=your-ec2-public-ip
+EC2_USER=ec2-user
+EC2_SSH_KEY=your-private-ssh-key
+```
+
+### Quy trình Deployment
+
+```bash
+# Deployment tự động thực hiện:
+cd /home/ec2-user/2xl-tour/
+git pull origin main
+npm install
+npm run build
+pm2 restart 2xl-tour
+```
+
 ## 🔧 Git Hooks
 
 Dự án sử dụng Husky để chạy các hooks tự động:
@@ -100,6 +137,10 @@ Dự án sử dụng Husky để chạy các hooks tự động:
 ## 📁 Cấu trúc thư mục
 
 ```
+.github/
+└── workflows/           # GitHub Actions workflows
+    └── deploy.yml       # EC2 deployment workflow
+
 src/
 ├── app/                 # Next.js App Router
 │   ├── layout.tsx       # Root layout với SEO metadata

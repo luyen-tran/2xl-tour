@@ -90,6 +90,43 @@ npm run build
 npm run build-storybook
 ```
 
+## 🚀 CI/CD Pipeline
+
+### GitHub Actions
+
+The project includes automated deployment using GitHub Actions:
+
+- **Workflow**: `.github/workflows/deploy.yml`
+- **Trigger**: Automatic deployment on push to `main` branch
+- **Target**: EC2 server deployment
+- **Process**:
+  1. Checkout code
+  2. Setup Node.js 18
+  3. Install dependencies and build
+  4. Deploy to EC2 via SSH
+  5. Restart application with PM2
+
+### Required Secrets
+
+Configure these secrets in your GitHub repository settings:
+
+```bash
+EC2_HOST=your-ec2-public-ip
+EC2_USER=ec2-user
+EC2_SSH_KEY=your-private-ssh-key
+```
+
+### Deployment Process
+
+```bash
+# The deployment automatically:
+cd /home/ec2-user/2xl-tour/
+git pull origin main
+npm install
+npm run build
+pm2 restart 2xl-tour
+```
+
 ## 🔧 Git Hooks
 
 The project uses Husky to run automated hooks:
@@ -100,6 +137,10 @@ The project uses Husky to run automated hooks:
 ## 📁 Project Structure
 
 ```
+.github/
+└── workflows/           # GitHub Actions workflows
+    └── deploy.yml       # EC2 deployment workflow
+
 src/
 ├── app/                 # Next.js App Router
 │   ├── layout.tsx       # Root layout with SEO metadata
