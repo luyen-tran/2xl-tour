@@ -19,12 +19,16 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
+    "dexie": "^3.2.4",
+    "jotai": "^2.6.0",
     "next": "15.4.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "sass": "^1.89.2"
+    "sass": "^1.89.2",
+    "zod": "^3.22.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

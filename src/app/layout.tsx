@@ -1,6 +1,7 @@
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
+import { Provider } from 'jotai';
 import '../styles/theme.scss';
 
 export const metadata: Metadata = {
@@ -103,8 +104,8 @@ export default function RootLayout({
         {/* Vercel Speed Insights */}
         <SpeedInsights />
 
-        {/* Content */}
-        {children}
+        {/* Jotai Provider for state management */}
+        <Provider>{children}</Provider>
       </body>
     </html>
   );

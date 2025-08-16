@@ -1,14 +1,27 @@
 # 2XL Tour
 
-A Next.js 15 project setup with TypeScript, Prettier, Storybook, Husky, and Vitest.
+A modern tour booking application built with Next.js 15, featuring tour management, booking system, and comprehensive data management.
 
 [🇻🇳 Tiếng Việt](./README.vi.md)
 
 ## 🚀 Tech Stack
 
+### Frontend & Framework
+
 - **Next.js 15** - React framework with App Router
 - **TypeScript** - Type safety
 - **SCSS** - CSS preprocessor with CSS Modules
+- **React 19** - Latest React features
+
+### Data Management
+
+- **Supabase** - Backend as a Service for database and authentication
+- **Jotai** - Atomic state management
+- **Dexie** - Client-side caching with IndexedDB
+- **Zod** - Runtime type validation
+
+### Development Tools
+
 - **Prettier** - Code formatter
 - **ESLint** - Code linting
 - **Storybook** - Component development environment
@@ -16,6 +29,9 @@ A Next.js 15 project setup with TypeScript, Prettier, Storybook, Husky, and Vite
 - **Testing Library** - React testing utilities
 - **Husky** - Git hooks
 - **lint-staged** - Pre-commit code quality checks
+
+### Analytics & Monitoring
+
 - **Vercel Analytics** - Web analytics and performance monitoring
 - **Vercel Speed Insights** - Real user monitoring for Core Web Vitals
 
@@ -28,6 +44,26 @@ cd 2xl-tour
 
 # Install dependencies
 npm install
+```
+
+## ⚙️ Environment Setup
+
+Create a `.env.local` file for local development:
+
+```bash
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
+
+# Site Configuration
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
+
+For production, set:
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://yourdomain.com
 ```
 
 ## 🏃‍♂️ Running the Project
@@ -47,6 +83,28 @@ npm run storybook
 ```
 
 Open [http://localhost:6006](http://localhost:6006) to view Storybook.
+
+## 🎯 Features
+
+### Tour Management System
+
+- **Tour Listing**: Browse tours with filtering and pagination
+- **Tour Details**: Comprehensive tour information with images and reviews
+- **Search & Filter**: Filter by location, category, price range, and rating
+- **Responsive Design**: Optimized for all device sizes
+
+### Data Management
+
+- **API Routes**: RESTful API endpoints for tour operations
+- **Client-side Caching**: Efficient data caching with Dexie
+- **State Management**: Global state with Jotai atoms
+- **Type Safety**: Full TypeScript coverage with Zod validation
+
+### Development Features
+
+- **Mock Data**: Comprehensive test data for development
+- **Error Handling**: Robust error handling and validation
+- **Performance**: Optimized with caching and lazy loading
 
 ## 🧪 Testing
 
@@ -90,43 +148,6 @@ npm run build
 npm run build-storybook
 ```
 
-## 🚀 CI/CD Pipeline
-
-### GitHub Actions
-
-The project includes automated deployment using GitHub Actions:
-
-- **Workflow**: `.github/workflows/deploy.yml`
-- **Trigger**: Automatic deployment on push to `main` branch
-- **Target**: EC2 server deployment
-- **Process**:
-  1. Checkout code
-  2. Setup Node.js 18
-  3. Install dependencies and build
-  4. Deploy to EC2 via SSH
-  5. Restart application with PM2
-
-### Required Secrets
-
-Configure these secrets in your GitHub repository settings:
-
-```bash
-EC2_HOST=your-ec2-public-ip
-EC2_USER=ec2-user
-EC2_SSH_KEY=your-private-ssh-key
-```
-
-### Deployment Process
-
-```bash
-# The deployment automatically:
-cd /home/ec2-user/2xl-tour/
-git pull origin main
-npm install
-npm run build
-pm2 restart 2xl-tour
-```
-
 ## 🔧 Git Hooks
 
 The project uses Husky to run automated hooks:
@@ -137,12 +158,12 @@ The project uses Husky to run automated hooks:
 ## 📁 Project Structure
 
 ```
-.github/
-└── workflows/           # GitHub Actions workflows
-    └── deploy.yml       # EC2 deployment workflow
-
 src/
 ├── app/                 # Next.js App Router
+│   ├── api/             # API routes
+│   │   └── tours/       # Tour API endpoints
+│   │       ├── route.ts         # Tours listing API
+│   │       └── [id]/route.ts    # Tour detail API
 │   ├── layout.tsx       # Root layout with SEO metadata
 │   └── page.tsx         # Home page
 ├── components/          # React components
@@ -152,7 +173,17 @@ src/
 │       ├── ThemeToggle.test.tsx      # Component tests
 │       └── ThemeToggle.stories.tsx   # Storybook stories
 ├── hooks/               # Custom React hooks
-│   └── useTheme.ts      # Theme management hook
+│   ├── useTheme.ts      # Theme management hook
+│   ├── useTours.ts      # Tours data fetching hook
+│   └── useTour.ts       # Single tour data fetching hook
+├── lib/                 # Utility libraries
+│   ├── supabase.ts      # Supabase client configuration
+│   ├── cache.ts         # Client-side caching with Dexie
+│   └── test-data.ts     # Mock data for development
+├── store/               # State management
+│   └── tours.ts         # Jotai atoms for tour state
+├── types/               # TypeScript type definitions
+│   └── tour.ts          # Tour-related types and interfaces
 └── styles/              # Global SCSS files
     ├── index.scss       # Main styles entry
     ├── theme.scss       # Theme variables
@@ -200,24 +231,79 @@ The project includes comprehensive SEO optimization:
 - **Structured data ready**: Prepared for JSON-LD implementation
 - **Performance monitoring**: Vercel Analytics and Speed Insights integrated
 
-### Environment Variables
+## 🔌 API Endpoints
 
-Create a `.env.local` file for local development:
+### Tours API
 
-```bash
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
+#### GET `/api/tours`
+
+Retrieve tours with filtering and pagination.
+
+**Query Parameters:**
+
+- `page` (number): Page number (default: 1)
+- `limit` (number): Items per page (default: 20, max: 50)
+- `location` (string): Filter by location
+- `category` (string): Filter by category
+- `minPrice` (number): Minimum price filter
+- `maxPrice` (number): Maximum price filter
+
+**Response:**
+
+```json
+{
+  "tours": Tour[],
+  "total": number,
+  "page": number,
+  "totalPages": number
+}
 ```
 
-For production, set:
+#### GET `/api/tours/[id]`
 
-```bash
-NEXT_PUBLIC_SITE_URL=https://yourdomain.com
+Retrieve a specific tour by ID.
+
+**Response:**
+
+```json
+{
+  "tour": TourDetail
+}
 ```
 
 ## 📚 Documentation
 
+### Framework & Core
+
 - [Next.js Documentation](https://nextjs.org/docs)
+- [React Documentation](https://react.dev/)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+
+### Data & State Management
+
+- [Supabase Documentation](https://supabase.com/docs)
+- [Jotai Documentation](https://jotai.org/)
+- [Dexie Documentation](https://dexie.org/)
+- [Zod Documentation](https://zod.dev/)
+
+### Development Tools
+
 - [Storybook Documentation](https://storybook.js.org/docs)
 - [Vitest Documentation](https://vitest.dev/)
 - [Testing Library Documentation](https://testing-library.com/)
 - [SCSS Documentation](https://sass-lang.com/documentation)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature-name`
+3. Make your changes and add tests
+4. Run tests: `npm run test`
+5. Run linting: `npm run lint`
+6. Commit your changes: `git commit -m 'feat: add some feature'`
+7. Push to the branch: `git push origin feature/your-feature-name`
+8. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
